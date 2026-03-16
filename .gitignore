@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local Netlify folder
+.netlify
+
+# Deployment zips
+*.zip
+web-selva-deploy-v*.zip

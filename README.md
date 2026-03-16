@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Web Selva Ecomarketing
 
-## Getting Started
+Agencia de marketing sostenible / verde. Sitio web ultra-creativo, fluido y de alto rendimiento.
 
-First, run the development server:
+## Stack Tecnológico
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Framework:** Next.js 14+ (App Router)
+- **Lenguaje:** TypeScript
+- **Estilos:** TailwindCSS (v4)
+- **Animaciones:** GSAP + ScrollTrigger
+- **Scroll Suave:** Lenis (integrado con GSAP Ticker)
+- **Carrusel:** Embla Carousel
+- **Iconos:** Lucide React
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Estructura del Proyecto
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `/src/app`: Rutas de la aplicación (App Router).
+- `/src/components`: Componentes reutilizables.
+  - `/ui`: Componentes atómicos (TransitionLink, etc).
+  - `/layout`: Header, Footer, WhatsAppButton.
+  - `/sections`: Secciones complejas (HomeHero, ServicesSlider).
+- `/src/context`: Contextos globales (TransitionContext).
+- `/src/lib`: Utilidades y datos estáticos (data.ts).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Setup & Desarrollo
 
-## Learn More
+1.  **Instalar dependencias:**
+    ```bash
+    npm install
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+2.  **Iniciar servidor de desarrollo:**
+    ```bash
+    npm run dev
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3.  **Construir para producción:**
+    ```bash
+    npm run build
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Decisiones de Arquitectura
 
-## Deploy on Vercel
+- **Transiciones de Página:** Se implementó un `TransitionProvider` con GSAP que maneja un overlay global. La navegación se intercepta mediante `TransitionLink` para permitir animaciones de salida (exit animations) antes de cambiar la ruta.
+- **Scroll Suave:** Lenis se inicializa globalmente y se sincroniza con `ScrollTrigger` de GSAP para asegurar que las animaciones basadas en scroll sean fluidas y precisas.
+- **Datos:** Al no usar CMS, todo el contenido textual se centraliza en `src/lib/data.ts` para facilitar la edición.
+- **Performance:** Uso de `next/image` y carga diferida. Animaciones optimizadas con `will-change` y `gsap.ticker`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Personalización
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Textos:** Editar `src/lib/data.ts`.
+- **Imágenes:** Reemplazar URLs en `src/lib/data.ts` o en los componentes específicos (`HomeHero`, `NosotrosPage`, etc).
+- **Colores/Fuentes:** Editar `src/app/globals.css` (Tailwind v4 theme).
+
+## QA & Despliegue
+
+El proyecto está listo para desplegarse en Netlify.
+Asegúrese de configurar las variables de entorno si es necesario (actualmente no requiere secrets).
