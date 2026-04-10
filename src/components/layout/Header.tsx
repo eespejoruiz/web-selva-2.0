@@ -22,26 +22,33 @@ const navLinks = [
 ]
 
 export function Header() {
-  const [isOpen, setIsOpen] = useState(false)
+  // Separate state for mobile overlay and desktop hover menu
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isDesktopMenuOpen, setIsDesktopMenuOpen] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
-  const menuContainerRef = useRef<HTMLDivElement>(null)
   const { navigate } = useTransition()
   const pathname = usePathname()
-  
+
   // Check if we are on a page that needs white header elements
-  const isWhiteHeaderPage = pathname?.startsWith('/servicios') || 
-                           pathname?.startsWith('/contacto') || 
-                           pathname?.startsWith('/clientes') || 
-                           pathname?.startsWith('/nosotros') || 
+  const isWhiteHeaderPage = pathname?.startsWith('/servicios') ||
+                           pathname?.startsWith('/contacto') ||
+                           pathname?.startsWith('/clientes') ||
+                           pathname?.startsWith('/nosotros') ||
                            pathname?.startsWith('/quien-eres')
-                           
+
   // Special check for layout positioning - only services page has the special logo position
   const isServicePage = pathname?.startsWith('/servicios')
 
+  // Active link check
+  const isActiveLink = (href: string) => {
+    if (href === '/') return pathname === '/'
+    return pathname?.startsWith(href)
+  }
+
   useGSAP(() => {
     // Header scroll visibility
-    const showAnim = gsap.from(headerRef.current, { 
+    const showAnim = gsap.from(headerRef.current, {
       yPercent: -100,
       paused: true,
       duration: 0.3,
@@ -70,16 +77,16 @@ export function Header() {
             ease: "power2.out",
             scrollTrigger: {
                 trigger: document.body,
-                start: "100 top", // Start hiding after 100px scroll
+                start: "100 top",
                 toggleActions: "play none none reverse"
             }
         })
     }
   }, { scope: headerRef })
 
-  // Prevent body scroll when menu is open
+  // Prevent body scroll when mobile menu is open
   useEffect(() => {
-    if (isOpen) {
+    if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
@@ -87,44 +94,44 @@ export function Header() {
     return () => {
       document.body.style.overflow = ''
     }
-  }, [isOpen])
+  }, [isMobileMenuOpen])
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+  }, [pathname])
 
   const handleLinkClick = (href: string) => {
-    // No need to close state since it is hover based for desktop
-    // But for mobile click we might need it.
-    // Actually, requested style is hover-based horizontal expansion.
     navigate(href)
   }
 
   return (
     <>
       <header ref={headerRef} className="fixed top-0 left-0 right-0 z-[100] transition-transform will-change-transform">
-        {/* Background removed for transparency */}
-        {/* <div className="bg-white/80 backdrop-blur-md border-b border-gray-100 absolute inset-0 z-10" /> */}
-        <div className="container mx-auto px-4 h-32 flex items-center justify-between relative z-[110]">
-          <Link 
-            href="/" 
-            onClick={(e) => { e.preventDefault(); handleLinkClick("/") }} 
+        <div className="container mx-auto px-4 h-20 md:h-32 flex items-center justify-between relative z-[110]">
+          <Link
+            href="/"
+            onClick={(e) => { e.preventDefault(); handleLinkClick("/") }}
             className={cn(
               "z-50 transition-all duration-300",
               !isServicePage && "absolute left-1/2 -translate-x-1/2 md:relative md:left-auto md:translate-x-0",
-              isServicePage && "absolute right-4 top-24 md:top-28"
+              isServicePage && "absolute right-4 top-16 md:top-28"
             )}
           >
             <div ref={logoRef} className={cn(
               "flex flex-col gap-1 transition-opacity",
               isServicePage ? "items-end" : "items-center"
             )}>
-              <Image 
-                src="/SVG-SELVAISOTIPO-DEGRADADO.svg" 
-                alt="Selva Logo" 
-                width={96} 
-                height={96} 
-                className="h-[96px] w-auto object-contain"
+              <Image
+                src="/SVG-SELVAISOTIPO-DEGRADADO.svg"
+                alt="Selva Logo"
+                width={96}
+                height={96}
+                className="h-[52px] md:h-[96px] w-auto object-contain"
                 priority
               />
               <span className={cn(
-                "text-[10px] font-bold tracking-[0.2em] uppercase leading-none transition-colors",
+                "hidden md:block text-[10px] font-bold tracking-[0.2em] uppercase leading-none transition-colors",
                 isWhiteHeaderPage ? "text-white" : "text-neutral-800"
               )}>
                 ECO MARKETING
@@ -132,15 +139,15 @@ export function Header() {
             </div>
           </Link>
 
-          {/* Desktop Interactive Menu */}
-          <div 
+          {/* Desktop Interactive Menu — hover-based expansion */}
+          <div
               className="hidden md:flex items-center ml-auto"
-              onMouseEnter={() => setIsOpen(true)}
-              onMouseLeave={() => setIsOpen(false)}
+              onMouseEnter={() => setIsDesktopMenuOpen(true)}
+              onMouseLeave={() => setIsDesktopMenuOpen(false)}
           >
               <div className={cn(
                   "flex items-center gap-1 bg-transparent rounded-full py-2 px-2 transition-all duration-500 ease-out overflow-hidden",
-                  isOpen ? "w-auto pr-6" : "w-12"
+                  isDesktopMenuOpen ? "w-auto pr-6" : "w-12"
               )}>
                   {/* Burger Icon (Always visible) */}
                   <div className={cn(
@@ -153,59 +160,83 @@ export function Header() {
                   {/* Links (Reveal on Hover) */}
                   <nav className={cn(
                       "flex items-center gap-6 whitespace-nowrap transition-all duration-300",
-                      isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4 pointer-events-none"
+                      isDesktopMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4 pointer-events-none"
                   )}>
-                      {navLinks.map((link) => (
-                          <Link 
-                              key={link.href} 
+                      {navLinks.map((link) => {
+                        const active = isActiveLink(link.href)
+                        return (
+                          <Link
+                              key={link.href}
                               href={link.href}
                               onClick={(e) => { e.preventDefault(); handleLinkClick(link.href) }}
                               className={cn(
-                                "text-sm font-medium transition-colors hover:text-primary",
-                                isWhiteHeaderPage ? "text-white" : "text-neutral-800"
+                                "text-sm font-medium transition-colors relative group",
+                                isWhiteHeaderPage
+                                  ? active ? "text-white font-bold" : "text-white/70 hover:text-white"
+                                  : active ? "text-primary font-bold" : "text-neutral-800 hover:text-primary"
                               )}
                           >
                               {link.name}
+                              {/* Active indicator dot */}
+                              {active && (
+                                <span className={cn(
+                                  "absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full",
+                                  isWhiteHeaderPage ? "bg-white" : "bg-primary"
+                                )} />
+                              )}
                           </Link>
-                      ))}
+                        )
+                      })}
                   </nav>
               </div>
           </div>
 
-          {/* Mobile Menu Button (Classic) */}
-          <button 
+          {/* Mobile Menu Button */}
+          <button
               className={cn(
                 "md:hidden p-2 z-[130] absolute right-4 transition-colors",
                 isWhiteHeaderPage ? "text-white" : "text-foreground"
               )}
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
           >
-            {isOpen ? <X className="w-8 h-8 text-white" /> : <Menu className="w-8 h-8" />}
+            {isMobileMenuOpen
+              ? <X className="w-8 h-8 text-white" />
+              : <Menu className="w-8 h-8" />
+            }
           </button>
         </div>
       </header>
 
-      {/* Mobile Full Screen Menu Overlay (Only visible on mobile when open) */}
+      {/* Mobile Full Screen Menu Overlay */}
       <div className={cn(
-        "md:hidden fixed inset-0 bg-black z-[120] flex flex-col items-center justify-center transition-all duration-500",
-        isOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
+        "md:hidden fixed inset-0 bg-black z-[120] flex flex-col items-center justify-center transition-all duration-300",
+        isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
       )}>
-        <nav className="flex flex-col gap-8 text-center">
-          {navLinks.map((link, i) => (
-            <Link 
-                key={link.href} 
-                href={link.href}
-                className={cn(
-                    "text-5xl font-bold text-white/50 hover:text-white transition-all duration-300 transform translate-y-8 opacity-0",
-                    isOpen && "translate-y-0 opacity-100"
-                )}
-                style={{ transitionDelay: `${i * 100}ms` }}
-                onClick={(e) => { e.preventDefault(); setIsOpen(false); handleLinkClick(link.href) }}
-            >
-              {link.name}
-            </Link>
-          ))}
+        <nav className="flex flex-col gap-2 text-center w-full px-8">
+          {navLinks.map((link, i) => {
+            const active = isActiveLink(link.href)
+            return (
+              <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                      "py-4 text-4xl font-bold transition-all duration-200 transform",
+                      "border-b border-white/10 last:border-b-0",
+                      isMobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0",
+                      active ? "text-primary" : "text-white/60 active:text-white"
+                  )}
+                  style={{ transitionDelay: `${i * 50}ms` }}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setIsMobileMenuOpen(false)
+                    handleLinkClick(link.href)
+                  }}
+              >
+                {link.name}
+              </Link>
+            )
+          })}
         </nav>
       </div>
     </>

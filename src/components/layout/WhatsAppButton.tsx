@@ -34,10 +34,10 @@ export function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       ref={buttonRef}
-      className="fixed bottom-8 right-8 z-50 flex items-center justify-center w-14 h-14 bg-transparent border-2 border-[#25D366] text-[#25D366] rounded-full shadow-lg hover:shadow-xl hover:bg-[#25D366]/10 transition-all"
-      aria-label="Contact via WhatsApp"
+      className="fixed bottom-5 right-4 md:bottom-8 md:right-8 z-50 flex items-center justify-center w-14 h-14 md:w-14 md:h-14 bg-[#25D366] text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 transition-all"
+      aria-label="Contáctanos por WhatsApp"
     >
-      <WhatsAppIcon className="w-8 h-8" />
+      <WhatsAppIcon className="w-7 h-7" />
     </a>
   )
 }

@@ -51,7 +51,7 @@ export function QuienEresDetail({ option }: QuienEresDetailProps) {
   }, { scope: containerRef })
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-neutral-900 text-white pt-32 pb-20 px-4 md:px-8 flex flex-col justify-center relative overflow-hidden">
+    <div ref={containerRef} className="min-h-screen bg-neutral-900 text-white pt-24 md:pt-32 pb-20 px-4 md:px-8 flex flex-col justify-center relative overflow-hidden">
        {/* Background decoration */}
        <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
@@ -61,11 +61,11 @@ export function QuienEresDetail({ option }: QuienEresDetailProps) {
             Volver a elegir
          </TransitionLink>
 
-         <h1 className="text-4xl md:text-6xl lg:text-7xl font-abroad font-bold mb-8 leading-tight tracking-tight">
+         <h1 className="text-3xl md:text-6xl lg:text-7xl font-abroad font-bold mb-6 md:mb-8 leading-tight tracking-tight">
            {option.title}
          </h1>
 
-         <p className="text-xl md:text-2xl text-neutral-300 leading-relaxed max-w-3xl mb-12">
+         <p className="text-base md:text-xl lg:text-2xl text-neutral-300 leading-relaxed max-w-3xl mb-10 md:mb-12">
            {option.paragraph}
          </p>
 

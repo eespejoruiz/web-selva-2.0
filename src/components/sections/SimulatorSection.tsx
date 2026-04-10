@@ -208,15 +208,15 @@ export function SimulatorSection() {
       <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[40vw] h-[40vw] bg-blue-500/5 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3 pointer-events-none" />
 
-      {/* Header / Progress */}
-      <div className="fixed top-0 left-0 w-full z-50">
-        <div className="w-full h-1 bg-white/10">
+      {/* Progress bar — below the site's fixed header (h-20 mobile / h-32 desktop) */}
+      <div className="fixed top-20 md:top-32 left-0 w-full z-[105]">
+        <div className="w-full h-0.5 bg-white/10">
           <div
             className="h-full bg-primary transition-all duration-500 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
-        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
+        <div className="container mx-auto px-4 py-3 flex justify-between items-center">
             <TransitionLink href="/" className="text-sm text-neutral-400 hover:text-white transition-colors flex items-center gap-2">
                 <ArrowLeft className="w-4 h-4" /> Volver al inicio
             </TransitionLink>
@@ -226,25 +226,25 @@ export function SimulatorSection() {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col justify-center items-center px-4 md:px-8 py-24 relative z-10 w-full max-w-4xl mx-auto">
+      {/* Main Content — padding-top: header (80/128px) + simulator bar (~44px) */}
+      <div className="flex-1 flex flex-col justify-center items-center px-4 md:px-8 pt-36 md:pt-48 pb-16 relative z-10 w-full max-w-4xl mx-auto">
         
         {!isFinished ? (
           <div ref={questionRef} className="w-full max-w-2xl opacity-0">
-            <h2 className="text-3xl md:text-5xl font-abroad font-bold mb-12 leading-tight tracking-tight text-center">
+            <h2 className="text-2xl md:text-5xl font-abroad font-bold mb-8 md:mb-12 leading-tight tracking-tight text-center">
               {QUESTIONS[currentStep].question}
             </h2>
 
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 gap-3 md:gap-4">
               {QUESTIONS[currentStep].options.map((option) => (
                 <button
                   key={option.value}
                   onClick={() => handleSelect(option.value)}
                   disabled={isAnimating}
-                  className="group flex items-center justify-between p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-primary/50 transition-all duration-300 text-left disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="group flex items-center justify-between p-4 md:p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-primary/50 active:bg-white/15 transition-all duration-300 text-left disabled:opacity-50 disabled:cursor-not-allowed min-h-[56px]"
                 >
-                  <span className="text-lg md:text-xl font-light">{option.label}</span>
-                  <ArrowRight className="w-5 h-5 text-neutral-500 group-hover:text-primary transition-colors transform group-hover:translate-x-1" />
+                  <span className="text-base md:text-xl font-light">{option.label}</span>
+                  <ArrowRight className="w-5 h-5 text-neutral-500 group-hover:text-primary transition-colors transform group-hover:translate-x-1 shrink-0 ml-3" />
                 </button>
               ))}
             </div>

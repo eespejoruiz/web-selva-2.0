@@ -45,6 +45,15 @@ export function PortafolioSection({ showLink = true }: { showLink?: boolean }) {
   const containerRef = useRef<HTMLElement>(null)
   const sliderRef = useRef<HTMLDivElement>(null)
   const [scrollWidth, setScrollWidth] = useState(0)
+  const [viewportHeight, setViewportHeight] = useState(0)
+
+  // Capture viewport height on client only (avoids SSR mismatch)
+  React.useEffect(() => {
+    setViewportHeight(window.innerHeight)
+    const handleResize = () => setViewportHeight(window.innerHeight)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const filteredProjects = PROJECTS.filter(p => p.category === filter)
 
@@ -111,27 +120,11 @@ export function PortafolioSection({ showLink = true }: { showLink?: boolean }) {
     const timer = setTimeout(calculateWidth, 500)
     window.addEventListener('resize', calculateWidth)
     
-    const handleNextProject = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!selectedProject) return;
-    const currentIndex = filteredProjects.findIndex(p => p.id === selectedProject.id);
-    const nextIndex = (currentIndex + 1) % filteredProjects.length;
-    setSelectedProject(filteredProjects[nextIndex]);
-  }
-
-  const handlePrevProject = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!selectedProject) return;
-    const currentIndex = filteredProjects.findIndex(p => p.id === selectedProject.id);
-    const prevIndex = (currentIndex - 1 + filteredProjects.length) % filteredProjects.length;
-    setSelectedProject(filteredProjects[prevIndex]);
-  }
-
   return () => {
       window.removeEventListener('resize', calculateWidth)
       clearTimeout(timer)
     }
-  }, [filter]) 
+  }, [filter])
 
   const handleNextProject = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -204,29 +197,36 @@ export function PortafolioSection({ showLink = true }: { showLink?: boolean }) {
       id="portafolio" 
       ref={containerRef} 
       className="w-full relative bg-background"
-      style={{ height: scrollWidth > 0 ? `${scrollWidth + window.innerHeight * 1.2}px` : '100vh' }}
+      style={{ height: scrollWidth > 0 && viewportHeight > 0 ? `${scrollWidth + viewportHeight * 1.2}px` : '100vh' }}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col lg:flex-row">
         
         {/* Left Column (Static/Sticky content) */}
-        <div className="lg:w-1/3 h-auto lg:h-full flex flex-col justify-start lg:justify-center px-4 pt-6 pb-2 md:px-12 md:py-12 z-10 bg-background/95 backdrop-blur-sm shrink-0">
-           <h2 className="text-4xl md:text-8xl font-abroad tracking-wide leading-[0.9] uppercase text-[#d12c93] mb-4 md:mb-6 relative inline-block">
+        <div className="lg:w-1/3 h-auto lg:h-full flex flex-col justify-start lg:justify-center px-4 pt-24 md:pt-6 pb-2 md:px-12 md:py-12 z-10 bg-background/95 backdrop-blur-sm shrink-0">
+           <h2 className="text-5xl md:text-8xl font-abroad tracking-wide leading-[0.9] uppercase text-[#d12c93] mb-3 md:mb-6 relative inline-block">
               Portafolio
            </h2>
-           <p className="text-sm md:text-lg text-neutral-600 mb-6 md:mb-12 leading-relaxed text-justify line-clamp-4 md:line-clamp-none">
+           {/* Description hidden on mobile to save space */}
+           <p className="hidden md:block text-lg text-neutral-600 mb-12 leading-relaxed">
              Somos una agencia de marketing que convierte marcas en historias que venden: estrategia clara, creatividad con intención y contenido que conecta. Diseñamos identidades, campañas y piezas para redes y e-commerce, cuidando coherencia, estética y resultados.
-             <br className="hidden md:block"/><br className="hidden md:block"/>
+             <br /><br />
              Cada proyecto parte de entender a tu audiencia y termina en una ejecución lista para crecer.
            </p>
 
-           <div className="grid grid-cols-3 gap-2 w-full md:flex md:flex-col md:gap-4 md:items-start md:w-auto mb-4 md:mb-0">
+           {/* Filter buttons — mobile: large touch targets; desktop: vertical list */}
+           <div className="flex gap-2 w-full md:flex md:flex-col md:gap-4 md:items-start md:w-auto mb-3 md:mb-0">
              {CATEGORIES.map(cat => (
                <button
                  key={cat}
                  onClick={() => handleCategoryChange(cat)}
                  className={cn(
-                   "text-sm md:text-xl font-medium transition-all duration-300 relative hover:text-primary py-2 px-1 rounded-md border border-neutral-200 md:border-none text-center md:text-left",
-                   filter === cat ? "text-primary md:pl-6 font-bold border-primary bg-transparent" : "text-neutral-400"
+                   "flex-1 md:flex-none text-sm md:text-xl font-medium transition-all duration-300 relative hover:text-primary",
+                   "py-3 px-3 md:py-0 md:px-0 rounded-xl md:rounded-none",
+                   "border md:border-none text-center md:text-left",
+                   "min-h-[48px] md:min-h-0",
+                   filter === cat
+                     ? "text-primary md:pl-6 font-bold border-primary bg-primary/5 md:bg-transparent"
+                     : "text-neutral-400 border-neutral-200"
                  )}
                >
                  {filter === cat && <span className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-primary rounded-full animate-pulse" />}
@@ -234,11 +234,11 @@ export function PortafolioSection({ showLink = true }: { showLink?: boolean }) {
                </button>
              ))}
            </div>
-           
+
            {showLink && (
-             <TransitionLink 
-              href="/portafolio" 
-              className="mt-2 md:mt-12 inline-block px-6 py-2 md:px-8 md:py-3 bg-transparent border border-primary text-primary text-sm md:text-base rounded-full font-bold hover:bg-primary/10 transition-colors w-fit mx-auto md:mx-0"
+             <TransitionLink
+              href="/portafolio"
+              className="mt-3 md:mt-12 inline-block px-6 py-3 md:px-8 md:py-3 bg-transparent border border-primary text-primary text-sm md:text-base rounded-full font-bold hover:bg-primary/10 transition-colors w-full md:w-fit text-center md:text-left"
             >
                Ver portafolio completo
              </TransitionLink>

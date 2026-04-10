@@ -61,65 +61,70 @@ export function QuienEresSection() {
             {/* Title Block */}
             <div className="relative animate-item">
               <h2 className="text-6xl md:text-8xl font-abroad tracking-wide leading-[0.9] uppercase">
-                <span className="block">
-                  Y t
-                  <span className="relative inline-block">
-                    u
-                  </span>,
-                </span>
-                <span className="block">Quien eres?</span>
+                <span className="block">¿Y tú,</span>
+                <span className="block">Quién eres?</span>
               </h2>
             </div>
 
-            {/* Links Block */}
-            <div className="text-lg md:text-xl font-medium leading-relaxed animate-item space-y-2">
+            {/* Links Block — mobile: vertical tappable list; desktop: inline flow */}
+            <div className="animate-item">
+              {/* Mobile: full-width tappable rows */}
+              <div className="flex flex-col gap-1 md:hidden">
+                {[
+                  { href: "/quien-eres/ya-trabajo-con-selva", label: "Ya trabajo con Selva" },
+                  { href: "/quien-eres/estoy-pensando-trabajar-con-ustedes", label: "Estoy pensando trabajar con ustedes" },
+                  { href: "/quien-eres/antes-fui-cliente", label: "Antes fui cliente" },
+                  { href: "/quien-eres/trabajo-en-otra-agencia", label: "Trabajo en otra agencia" },
+                  { href: "/quien-eres/busco-alianza-con-selva", label: "Busco una alianza con Selva" },
+                  { href: "/quien-eres/soy-la-mama-de-alguien-aqui", label: "Soy la mamá de alguien aquí" },
+                  { href: "/quien-eres/estoy-buscando-respuestas", label: "Estoy buscando respuestas" },
+                  { href: "/quien-eres/no-termino-de-entender-esta-web", label: "No termino de entender esta web" },
+                ].map((item) => (
+                  <TransitionLink
+                    key={item.href}
+                    href={item.href}
+                    className="flex items-center justify-between py-3 px-4 rounded-xl bg-white/5 active:bg-white/15 transition-colors border border-white/10 text-white text-base font-medium min-h-[52px]"
+                  >
+                    <span>{item.label}</span>
+                    <span className="text-white/50 text-lg">›</span>
+                  </TransitionLink>
+                ))}
+              </div>
+
+              {/* Desktop: original inline flow */}
+              <div className="hidden md:block text-xl font-medium leading-relaxed space-y-2">
                 <p className="flex flex-wrap gap-x-2">
-                  <TransitionLink href="/quien-eres/ya-trabajo-con-selva" className="hover:underline opacity-90 hover:opacity-100">
-                    Ya trabajo con Selva ›
-                  </TransitionLink>
-                  <span className="opacity-50 hidden md:inline">•</span>
-                  <TransitionLink href="/quien-eres/estoy-pensando-trabajar-con-ustedes" className="hover:underline opacity-90 hover:opacity-100">
-                    Estoy pensando trabajar con ustedes ›
-                  </TransitionLink>
-                  <span className="opacity-50 hidden md:inline">•</span>
-                  <TransitionLink href="/quien-eres/antes-fui-cliente" className="hover:underline opacity-90 hover:opacity-100">
-                    Antes fui cliente ›
-                  </TransitionLink>
-                  <span className="opacity-50 hidden md:inline">•</span>
-                  <TransitionLink href="/quien-eres/trabajo-en-otra-agencia" className="hover:underline opacity-90 hover:opacity-100">
-                    Trabajo en otra agencia ›
-                  </TransitionLink>
-                  <span className="opacity-50 hidden md:inline">•</span>
-                  <TransitionLink href="/quien-eres/busco-una-alianza-con-selva" className="hover:underline opacity-90 hover:opacity-100">
-                    Busco una alianza con Selva ›
-                  </TransitionLink>
-                  <span className="opacity-50 hidden md:inline">•</span>
-                  <TransitionLink href="/quien-eres/soy-la-mama-de-alguien-aqui" className="hover:underline opacity-90 hover:opacity-100">
-                    Soy la mamá de alguien aquí ›
-                  </TransitionLink>
-                  <span className="opacity-50 hidden md:inline">•</span>
-                  <TransitionLink href="/quien-eres/estoy-buscando-respuestas" className="hover:underline opacity-90 hover:opacity-100">
-                    Estoy buscando respuestas ›
-                  </TransitionLink>
-                  <span className="opacity-50 hidden md:inline">•</span>
-                  <TransitionLink href="/quien-eres/no-termino-de-entender-esta-web" className="hover:underline opacity-90 hover:opacity-100">
-                    No termino de entender esta web ›
-                  </TransitionLink>
+                  <TransitionLink href="/quien-eres/ya-trabajo-con-selva" className="hover:underline opacity-90 hover:opacity-100">Ya trabajo con Selva ›</TransitionLink>
+                  <span className="opacity-50">•</span>
+                  <TransitionLink href="/quien-eres/estoy-pensando-trabajar-con-ustedes" className="hover:underline opacity-90 hover:opacity-100">Estoy pensando trabajar con ustedes ›</TransitionLink>
+                  <span className="opacity-50">•</span>
+                  <TransitionLink href="/quien-eres/antes-fui-cliente" className="hover:underline opacity-90 hover:opacity-100">Antes fui cliente ›</TransitionLink>
+                  <span className="opacity-50">•</span>
+                  <TransitionLink href="/quien-eres/trabajo-en-otra-agencia" className="hover:underline opacity-90 hover:opacity-100">Trabajo en otra agencia ›</TransitionLink>
+                  <span className="opacity-50">•</span>
+                  <TransitionLink href="/quien-eres/busco-alianza-con-selva" className="hover:underline opacity-90 hover:opacity-100">Busco una alianza con Selva ›</TransitionLink>
+                  <span className="opacity-50">•</span>
+                  <TransitionLink href="/quien-eres/soy-la-mama-de-alguien-aqui" className="hover:underline opacity-90 hover:opacity-100">Soy la mamá de alguien aquí ›</TransitionLink>
+                  <span className="opacity-50">•</span>
+                  <TransitionLink href="/quien-eres/estoy-buscando-respuestas" className="hover:underline opacity-90 hover:opacity-100">Estoy buscando respuestas ›</TransitionLink>
+                  <span className="opacity-50">•</span>
+                  <TransitionLink href="/quien-eres/no-termino-de-entender-esta-web" className="hover:underline opacity-90 hover:opacity-100">No termino de entender esta web ›</TransitionLink>
                 </p>
+              </div>
             </div>
 
             {/* Buttons Block */}
-            <div className="flex flex-col items-start gap-4 mt-4 animate-item">
-               <TransitionLink 
-                href="/servicios" 
-                className="px-8 py-3 bg-transparent border border-white text-white rounded-full text-sm md:text-base font-bold hover:shadow-lg hover:scale-105 hover:bg-white/10 transition-all duration-300"
+            <div className="flex flex-col items-stretch md:items-start gap-3 mt-4 animate-item">
+               <TransitionLink
+                href="/servicios"
+                className="px-8 py-4 md:py-3 bg-transparent border border-white text-white rounded-full text-sm md:text-base font-bold hover:shadow-lg hover:scale-105 hover:bg-white/10 transition-all duration-300 text-center md:text-left"
               >
                 Ver servicios y casos ›
               </TransitionLink>
-              
-               <TransitionLink 
-                href="/simulador" 
-                className="px-8 py-3 bg-transparent border border-white text-white rounded-full text-sm md:text-base font-bold hover:shadow-lg hover:scale-105 hover:bg-white/10 transition-all duration-300"
+
+               <TransitionLink
+                href="/simulador"
+                className="px-8 py-4 md:py-3 bg-transparent border border-white text-white rounded-full text-sm md:text-base font-bold hover:shadow-lg hover:scale-105 hover:bg-white/10 transition-all duration-300 text-center md:text-left"
               >
                 Armar mi mix con el simulador ›
               </TransitionLink>

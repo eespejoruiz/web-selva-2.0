@@ -11,6 +11,15 @@ export function ServiciosSection() {
   const containerRef = useRef<HTMLElement>(null)
   const sliderRef = useRef<HTMLDivElement>(null)
   const [scrollWidth, setScrollWidth] = useState(0)
+  const [viewportHeight, setViewportHeight] = useState(0)
+
+  // Capture viewport height on client only (avoids SSR hydration mismatch)
+  React.useEffect(() => {
+    setViewportHeight(window.innerHeight)
+    const handleResize = () => setViewportHeight(window.innerHeight)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   // Calculate the total scrollable width
   useEffect(() => {
@@ -67,7 +76,7 @@ export function ServiciosSection() {
       ref={containerRef} 
       className="w-full relative bg-[#005f73]"
       // Increase height multiplier to allow for the pause at the end
-      style={{ height: scrollWidth > 0 ? `${scrollWidth * 1.0 + window.innerHeight}px` : '150vh' }}
+      style={{ height: scrollWidth > 0 && viewportHeight > 0 ? `${scrollWidth + viewportHeight}px` : '150vh' }}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
         {/* Background Image */}
@@ -85,7 +94,7 @@ export function ServiciosSection() {
 
         <div className="relative z-10 h-full flex flex-col justify-center">
           {/* Header Content */}
-          <div className="container mx-auto px-4 md:px-8 pt-4 md:pt-10 pb-4 md:pb-8 shrink-0">
+          <div className="container mx-auto px-4 md:px-8 pt-24 md:pt-40 pb-4 md:pb-8 shrink-0">
             <h2 className="text-4xl md:text-8xl font-abroad tracking-wide leading-[0.9] uppercase text-white mb-4 md:mb-6">
               <span className="block">Nuestros</span>
               <span className="block relative inline-block">

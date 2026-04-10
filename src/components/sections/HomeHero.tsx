@@ -71,15 +71,15 @@ export function HomeHero() {
   return (
     <div id="home-hero" ref={containerRef} className="relative h-screen w-full overflow-hidden bg-neutral-100">
       {/* Video Background */}
-      <video 
+      <video
         ref={videoRef}
-        autoPlay 
-        muted 
-        loop 
-        playsInline 
+        autoPlay
+        muted
+        loop
+        playsInline
         preload="auto"
-        className="absolute inset-0 w-full h-[120%] object-cover pointer-events-none"
-        src="/jungle-2025-12-09-22-46-01-utc_1.webm" 
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        src="/jungle-2025-12-09-22-46-01-utc_1.webm"
       />
       
       {/* Mask Layer */}
@@ -140,10 +140,10 @@ export function HomeHero() {
         <rect width="100%" height="100%" fill="#F5F5F5" mask="url(#hero-mask)" />
       </svg>
 
-      {/* CTA - Fade out as we scroll */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 text-neutral-800 flex flex-col items-center gap-2 animate-pulse">
-        <span className="text-sm font-medium tracking-widest uppercase">Scroll</span>
-        <div className="w-[1px] h-12 bg-neutral-800" />
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 z-20 text-neutral-800 flex flex-col items-center gap-2 animate-pulse">
+        <span className="text-xs md:text-sm font-medium tracking-widest uppercase">Scroll</span>
+        <div className="w-[1px] h-8 md:h-12 bg-neutral-800" />
       </div>
     </div>
   )

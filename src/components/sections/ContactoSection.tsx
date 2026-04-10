@@ -40,7 +40,7 @@ export function ContactoSection() {
     <section 
       id="contacto" 
       ref={containerRef} 
-      className="relative w-full min-h-screen flex flex-col items-center justify-center py-20 overflow-hidden"
+      className="relative w-full min-h-screen flex flex-col items-center justify-center pt-24 md:pt-20 pb-16 overflow-hidden"
     >
       {/* Background Image */}
       <div className="absolute inset-0 z-0 bg-black">
@@ -48,10 +48,11 @@ export function ContactoSection() {
           src="/Recurso 61port.webp"
           alt="Contact Background"
           fill
-          className="object-cover"
+          className="object-cover opacity-60"
           priority
         />
-
+        {/* Gradient overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 md:px-8 flex flex-col items-center w-full max-w-5xl">

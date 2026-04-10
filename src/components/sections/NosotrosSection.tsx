@@ -53,12 +53,12 @@ export function NosotrosSection({ showLink = true }: { showLink?: boolean }) {
   }, { scope: containerRef })
 
   return (
-    <section id="nosotros" ref={containerRef} className="relative min-h-screen py-8 md:py-20 px-4 md:px-8 overflow-hidden flex items-center">
+    <section id="nosotros" ref={containerRef} className="relative min-h-screen pt-24 md:pt-20 pb-8 md:py-20 px-4 md:px-8 overflow-hidden flex items-center">
       {/* Background Image */}
       <div className="absolute inset-0 w-full h-full z-0">
-         <Image 
-            src="/Recurso%206quieneres.webp" 
-            alt="Background Texture" 
+         <Image
+            src="/Recurso%206quieneres.webp"
+            alt="Background Texture"
             fill
             className="object-cover"
             priority
@@ -68,7 +68,7 @@ export function NosotrosSection({ showLink = true }: { showLink?: boolean }) {
 
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 items-center relative z-10">
         {/* Left Column: Image */}
-        <div className="relative h-[30vh] md:h-[70vh] w-full order-1">
+        <div className="relative h-[45vh] md:h-[70vh] w-full order-1">
           <div ref={imgRef} className="absolute inset-0 w-full h-full md:h-[120%] md:-top-[10%]">
              <Image 
                 src="/Recurso%205quieneres.webp" 

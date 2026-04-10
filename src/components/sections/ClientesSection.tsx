@@ -3,6 +3,8 @@ import React, { useRef } from "react"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import Image from "next/image"
+import { TransitionLink } from "@/components/ui/TransitionLink"
+import { ArrowRight } from "lucide-react"
 
 const CLIENTS = [
   { id: 1, src: "/Recurso 54port.svg", alt: "Amazon Andes" },
@@ -12,7 +14,7 @@ const CLIENTS = [
   { id: 5, src: "/Recurso 58port.svg", alt: "Client 5" },
 ]
 
-export function ClientesSection() {
+export function ClientesSection({ showLink = true }: { showLink?: boolean }) {
   const containerRef = useRef<HTMLElement>(null)
 
   useGSAP(() => {
@@ -88,19 +90,19 @@ export function ClientesSection() {
           </div>
         </div>
 
-        {/* Pagination / Progress Indicator */}
-        <div className="client-pagination mt-20 md:mt-32 flex flex-col items-center gap-4 z-10 w-full">
-          {/* Line */}
-          <div className="w-64 h-1 bg-neutral-800 rounded-full overflow-hidden relative">
-              <div className="absolute left-[30%] top-0 h-full w-1/4 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)]"></div>
-          </div>
-          {/* Dots */}
-          <div className="flex gap-3 mt-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-neutral-600"></div>
-              <div className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"></div>
-              <div className="w-1.5 h-1.5 rounded-full bg-neutral-600"></div>
-              <div className="w-1.5 h-1.5 rounded-full bg-neutral-600"></div>
-          </div>
+        {/* CTA */}
+        <div className="client-pagination mt-16 md:mt-24 flex flex-col items-center gap-6 z-10 w-full">
+          <p className="text-neutral-400 text-sm md:text-base tracking-widest uppercase">
+            Y muchos más que confían en nosotros
+          </p>
+          {showLink && (
+            <TransitionLink
+              href="/clientes"
+              className="flex items-center gap-2 px-8 py-3 border border-white/30 text-white rounded-full text-sm font-bold hover:bg-white/10 hover:border-white/60 transition-all duration-300"
+            >
+              Ver todos los clientes <ArrowRight className="w-4 h-4" />
+            </TransitionLink>
+          )}
         </div>
       </div>
     </section>

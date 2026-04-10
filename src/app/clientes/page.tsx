@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function ClientesPage() {
   return (
     <main>
-      <ClientesSection />
+      <ClientesSection showLink={false} />
     </main>
   )
 }
