@@ -77,10 +77,15 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://selvagencia.com/nosotros/",
+      "@id": "https://selvagencia.com/#organization",
       "name": "Selva Ecomarketing",
       "url": "https://selvagencia.com/",
-      "logo": "https://selvagencia.com/logo_selva.webp",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://selvagencia.com/logo_selva.webp",
+        "width": "600",
+        "height": "60"
+      },
       "parentOrganization": {
         "@type": "Organization",
         "name": "Amazon Andes Export"
@@ -95,13 +100,84 @@ const jsonLd = {
     },
     {
       "@type": "ProfessionalService",
-      "@id": "https://www.selvagencia.com/servicios/",
+      "@id": "https://selvagencia.com/#service",
       "name": "Selva Ecomarketing",
       "url": "https://selvagencia.com/",
+      "logo": "https://selvagencia.com/logo_selva.webp",
       "description": "Agencia de marketing digital especializada en sostenibilidad, impacto y responsabilidad social.",
       "address": {
         "@type": "PostalAddress",
         "addressCountry": "PE"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Servicios",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "GEO para Empresas Sostenibles",
+              "url":"https://selvagencia.com/servicios/geo/"
+            }
+          },
+                    {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "SEO para Empresas Sostenibles",
+              "url":"https://selvagencia.com/servicios/seo/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "SEM para Empresas Sostenibles",
+              "url":"https://selvagencia.com/servicios/sem/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Gestión de Redes Sociales",
+              "url":"https://selvagencia.com/servicios/rrdd/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Desarrollo Web",
+              "url":"https://selvagencia.com/servicios/web/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Análisis de Datos",
+              "url":"https://selvagencia.com/servicios/data/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Branding",
+              "url":"https://selvagencia.com/servicios/branding/"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "e-mail marketing",
+              "url":"https://selvagencia.com/servicios/email/"
+            }
+          },
+        ]
       }
     }
   ]
