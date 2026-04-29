@@ -15,40 +15,47 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://webselva.com"), // TODO: Actualizar con el dominio real
+  // [SEO-006] Usamos variable de entorno con fallback al dominio real
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://selvagencia.com"), 
   title: {
-    default: "Web Selva Ecomarketing | Agencia de Marketing Sostenible",
-    template: "%s | Web Selva Ecomarketing",
+    default: "Selva Ecomarketing | Agencia de Marketing Sostenible",
+    template: "%s | Selva Ecomarketing",
   },
   description: "Agencia de marketing digital especializada en sostenibilidad, impacto y responsabilidad social. Estrategias de SEO, SEM, y diseño web para empresas conscientes.",
   keywords: ["marketing sostenible", "agencia de marketing verde", "seo", "sem", "diseño web sostenible", "ecomarketing", "marketing de impacto"],
-  authors: [{ name: "Web Selva" }],
-  creator: "Web Selva",
-  publisher: "Web Selva",
+  authors: [{ name: "Selva Ecomarketing" }],
+  creator: "Selva Ecomarketing",
+  publisher: "Selva Ecomarketing",
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
+  
+  // [SEO-001] AQUÍ NACE LA ETIQUETA CANONICAL QUE MATA EL DUPLICADO
+  alternates: {
+    canonical: "https://selvagencia.com",
+  },
+
   openGraph: {
-    title: "Web Selva Ecomarketing | Agencia de Marketing Sostenible",
+    title: "Selva Ecomarketing | Agencia de Marketing Sostenible",
     description: "Agencia de marketing digital especializada en sostenibilidad. Impulsamos marcas con propósito.",
-    url: "https://webselva.com",
-    siteName: "Web Selva Ecomarketing",
-    locale: "es_ES",
+    url: "https://selvagencia.com", // [SEO-006] Dominio corregido
+    siteName: "Selva Ecomarketing",
+    locale: "es_PE", // [SEO-007] Locale corregido para Perú
     type: "website",
     images: [
       {
-        url: "/logo_selva.webp", // Asegurarse de tener una imagen OG adecuada
+        url: "/logo_selva.webp",
         width: 1200,
         height: 630,
-        alt: "Web Selva Ecomarketing",
+        alt: "Selva Ecomarketing",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Web Selva Ecomarketing",
+    title: "Selva Ecomarketing | Agencia de Marketing Sostenible",
     description: "Agencia de marketing digital especializada en sostenibilidad.",
     images: ["/logo_selva.webp"],
   },
