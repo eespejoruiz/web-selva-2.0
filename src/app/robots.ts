@@ -1,15 +1,18 @@
 import { MetadataRoute } from 'next'
 
-export const dynamic = 'force-static'
-
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://webselva.com' // TODO: Actualizar con el dominio real
+  // [SEO-006] Eliminamos webselva.com y usamos la variable de entorno con fallback al dominio real
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://selvagencia.com'
 
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/private/',
+      disallow: [
+        '/private/', 
+        '/_next/', 
+        '/api/'
+      ], // Buenas prácticas: bloqueamos rutas internas que no deben indexarse
     },
     sitemap: `${baseUrl}/sitemap.xml`,
   }
