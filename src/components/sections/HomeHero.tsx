@@ -71,6 +71,9 @@ export function HomeHero() {
   return (
     <div id="home-hero" ref={containerRef} className="relative h-screen w-full overflow-hidden bg-neutral-100">
       {/* Video Background */}
+      <h1 className="sr-only">
+        Selva Ecomarketing | Agencia de Marketing Sostenible, SEO y Diseño Web en Perú
+      </h1>
       <video
         ref={videoRef}
         autoPlay
