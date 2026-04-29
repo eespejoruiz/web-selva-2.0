@@ -12,6 +12,10 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
   display: "swap",
   weight: ["400", "500", "600", "700"],
+  // [OPTIMIZACIÓN] Añadimos un fallback explícito. 
+  // Next.js creará automáticamente los "ajustes métricos" para que Arial 
+  // ocupe el mismo espacio exacto que ocuparía Montserrat.
+  adjustFontFallback: true, 
 });
 
 export const metadata: Metadata = {
