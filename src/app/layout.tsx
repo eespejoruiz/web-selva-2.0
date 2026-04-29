@@ -72,6 +72,41 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://selvagencia.com/nosotros/",
+      "name": "Selva Ecomarketing",
+      "url": "https://selvagencia.com/",
+      "logo": "https://selvagencia.com/logo_selva.webp",
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "Amazon Andes Export"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+51-913527489",
+        "contactType": "customer service",
+        "areaServed": "PE",
+        "availableLanguage": "Spanish"
+      }
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://www.selvagencia.com/servicios/",
+      "name": "Selva Ecomarketing",
+      "url": "https://selvagencia.com/",
+      "description": "Agencia de marketing digital especializada en sostenibilidad, impacto y responsabilidad social.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "PE"
+      }
+    }
+  ]
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -79,6 +114,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={montserrat.variable} suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="antialiased bg-background text-foreground overflow-x-hidden selection:bg-primary selection:text-white">
         <SmoothScrollProvider>
           <TransitionProvider>
