@@ -1,36 +1,25 @@
-name: Deploy to SiteGround
+name: Deploy to VPS
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-        cache: 'npm'
-
-    - name: Install Dependencies
-      run: npm install
-
-    - name: Build Project
-      run: npm run build
-
-    - name: Deploy via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./out/
-        server-dir: /selvagencia.com/public_html/
-        protocol: ftp
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: root
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          script: |
+            ssh -o StrictHostKeyChecking=no root@10.0.1.4 << 'REMOTE'
+            cd /tmp/web-selva
+            GIT_SSH_COMMAND="ssh -i /root/.ssh/github_selva -o StrictHostKeyChecking=no" git pull origin main
+            docker build -t selva-web:latest .
+            docker rm -f selva-web
+            docker run -d --name selva-web -p 3600:80 --restart unless-stopped selva-web:latest
+            REMOTE
