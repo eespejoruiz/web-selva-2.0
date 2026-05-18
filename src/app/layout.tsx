@@ -6,6 +6,12 @@ import { TransitionProvider } from "@/context/TransitionContext";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
+import { JsonLd } from "@/components/JsonLd";
+import { SITE_CONFIG } from "@/lib/site-config";
+import {
+  buildOrganizationSchema,
+  buildWebsiteSchema,
+} from "@/lib/seo";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -15,42 +21,54 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://webselva.com"), // TODO: Actualizar con el dominio real
+  metadataBase: new URL(SITE_CONFIG.baseUrl),
+  alternates: { canonical: "/" },
   title: {
-    default: "Web Selva Ecomarketing | Agencia de Marketing Sostenible",
-    template: "%s | Web Selva Ecomarketing",
+    default: `${SITE_CONFIG.brandFull} | ${SITE_CONFIG.tagline}`,
+    template: `%s | ${SITE_CONFIG.brandFull}`,
   },
-  description: "Agencia de marketing digital especializada en sostenibilidad, impacto y responsabilidad social. Estrategias de SEO, SEM, y diseño web para empresas conscientes.",
-  keywords: ["marketing sostenible", "agencia de marketing verde", "seo", "sem", "diseño web sostenible", "ecomarketing", "marketing de impacto"],
-  authors: [{ name: "Web Selva" }],
-  creator: "Web Selva",
-  publisher: "Web Selva",
+  description: SITE_CONFIG.defaultDescription,
+  keywords: [
+    "agencia marketing sostenible",
+    "agencia marketing Perú",
+    "marketing digital sostenible",
+    "SEO sostenible",
+    "SEM Perú",
+    "GEO marketing IA",
+    "diseño web sostenible",
+    "ecomarketing",
+    "marketing de impacto",
+    "comunicación de impacto",
+  ],
+  authors: [{ name: SITE_CONFIG.brandFull, url: SITE_CONFIG.baseUrl }],
+  creator: SITE_CONFIG.brandFull,
+  publisher: SITE_CONFIG.brandFull,
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
   openGraph: {
-    title: "Web Selva Ecomarketing | Agencia de Marketing Sostenible",
-    description: "Agencia de marketing digital especializada en sostenibilidad. Impulsamos marcas con propósito.",
-    url: "https://webselva.com",
-    siteName: "Web Selva Ecomarketing",
-    locale: "es_ES",
+    title: `${SITE_CONFIG.brandFull} | ${SITE_CONFIG.tagline}`,
+    description: SITE_CONFIG.defaultDescription,
+    url: SITE_CONFIG.baseUrl,
+    siteName: SITE_CONFIG.brandFull,
+    locale: SITE_CONFIG.defaultLocale,
     type: "website",
     images: [
       {
-        url: "/logo_selva.webp", // Asegurarse de tener una imagen OG adecuada
+        url: SITE_CONFIG.logoPath,
         width: 1200,
         height: 630,
-        alt: "Web Selva Ecomarketing",
+        alt: SITE_CONFIG.brandFull,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Web Selva Ecomarketing",
-    description: "Agencia de marketing digital especializada en sostenibilidad.",
-    images: ["/logo_selva.webp"],
+    title: SITE_CONFIG.brandFull,
+    description: SITE_CONFIG.defaultDescription,
+    images: [SITE_CONFIG.logoPath],
   },
   robots: {
     index: true,
@@ -72,6 +90,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={montserrat.variable} suppressHydrationWarning>
+      <head>
+        <JsonLd data={[buildOrganizationSchema(), buildWebsiteSchema()]} />
+      </head>
       <body className="antialiased bg-background text-foreground overflow-x-hidden selection:bg-primary selection:text-white">
         <SmoothScrollProvider>
           <TransitionProvider>

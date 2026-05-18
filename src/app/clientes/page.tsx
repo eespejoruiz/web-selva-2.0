@@ -1,15 +1,25 @@
-import { Metadata } from "next"
-import { ClientesSection } from "@/components/sections/ClientesSection"
+import { Metadata } from "next";
+import { ClientesSection } from "@/components/sections/ClientesSection";
+import { JsonLd } from "@/components/JsonLd";
+import { buildPageMetadata, buildBreadcrumbSchema } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Clientes | Web Selva Ecomarketing",
-  description: "Descubre las empresas y organizaciones que confían en Web Selva para potenciar su impacto y comunicación sostenible.",
-}
+export const metadata: Metadata = buildPageMetadata({
+  path: "/clientes",
+  title: "Clientes",
+  description:
+    "Descubre las empresas y organizaciones que confían en Selva para potenciar su impacto y comunicación sostenible.",
+});
 
 export default function ClientesPage() {
   return (
-    <main>
-      <ClientesSection showLink={false} />
-    </main>
-  )
+    <>
+      <JsonLd
+        data={buildBreadcrumbSchema([
+          { name: "Inicio", path: "/" },
+          { name: "Clientes", path: "/clientes" },
+        ])}
+      />
+      <ClientesSection />
+    </>
+  );
 }

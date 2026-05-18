@@ -1,16 +1,18 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from "next";
+import { SITE_CONFIG } from "@/lib/site-config";
 
-export const dynamic = 'force-static'
+export const dynamic = "force-static";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://webselva.com' // TODO: Actualizar con el dominio real
-
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: '/private/',
-    },
-    sitemap: `${baseUrl}/sitemap.xml`,
-  }
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/private/", "/_next/data/", "/api/"],
+      },
+    ],
+    sitemap: `${SITE_CONFIG.baseUrl}/sitemap.xml`,
+    host: SITE_CONFIG.baseUrl,
+  };
 }
