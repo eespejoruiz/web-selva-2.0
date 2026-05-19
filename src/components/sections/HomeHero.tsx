@@ -70,6 +70,10 @@ export function HomeHero() {
 
   return (
     <div id="home-hero" ref={containerRef} className="relative h-screen w-full overflow-hidden bg-neutral-100">
+      {/* H1 semántico para SEO — visualmente oculto, no afecta la animación del hero */}
+      <h1 className="sr-only">
+        Selva Ecomarketing — Agencia de Marketing Digital Sostenible en Perú
+      </h1>
       {/* Video Background */}
       <video
         ref={videoRef}

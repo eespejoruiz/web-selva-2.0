@@ -19,6 +19,7 @@ export default function PortafolioPage() {
           { name: "Portafolio", path: "/portafolio" },
         ])}
       />
+      <h1 className="sr-only">Portafolio de Casos de Éxito en Marketing Sostenible</h1>
       <PortafolioSection />
     </>
   );

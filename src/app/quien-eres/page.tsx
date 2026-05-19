@@ -19,6 +19,7 @@ export default function QuienEresPage() {
           { name: "¿Quién Eres?", path: "/quien-eres" },
         ])}
       />
+      <h1 className="sr-only">¿Quién Eres? Conoce Cómo Trabajamos Contigo</h1>
       <QuienEresSection />
     </>
   );

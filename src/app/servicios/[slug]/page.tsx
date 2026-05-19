@@ -12,6 +12,21 @@ import {
   buildServiceSchema,
 } from "@/lib/seo";
 
+// Títulos ricos para SEO — los slugs de acrónimos (GEO, SEO, SEM) necesitan
+// contexto extra para superar el mínimo de longitud que premia Google.
+const SEO_TITLE_BY_SLUG: Record<string, string> = {
+  geo: "GEO — Optimización para Respuestas de IA",
+  seo: "SEO Sostenible — Posicionamiento Orgánico en Google",
+  sem: "SEM — Google, Meta y TikTok Ads que Convierten",
+  rrdd: "Gestión de Redes Sociales para Marcas con Propósito",
+  web: "Desarrollo Web Sostenible y de Bajo Impacto",
+  data: "Análisis de Datos y Dashboards de Marketing",
+  branding: "Branding con Propósito y Coherencia de Marca",
+  email: "Email Marketing y Automatización CRM",
+  audiovisuales: "Audiovisuales para Marcas con Impacto",
+  marketplaces: "Posicionamiento en Amazon y Alibaba",
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -23,7 +38,7 @@ export async function generateMetadata({
 
   return buildPageMetadata({
     path: `/servicios/${slug}`,
-    title: service.title,
+    title: SEO_TITLE_BY_SLUG[slug] ?? service.title,
     description: service.description,
     image: service.image,
   });
