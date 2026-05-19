@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { ServiciosSection } from "@/components/sections/ServiciosSection";
+import { ServiciosGrid } from "@/components/sections/ServiciosGrid";
 import { JsonLd } from "@/components/JsonLd";
 import {
   buildPageMetadata,
@@ -36,7 +36,7 @@ export default function ServiciosPage() {
         ]}
       />
       <h1 className="sr-only">Servicios de Marketing Sostenible para Empresas con Propósito</h1>
-      <ServiciosSection />
+      <ServiciosGrid />
     </>
   );
 }
