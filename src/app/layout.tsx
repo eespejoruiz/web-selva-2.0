@@ -6,6 +6,7 @@ import { TransitionProvider } from "@/context/TransitionContext";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
+import { MobileBottomBar } from "@/components/layout/MobileBottomBar";
 import { JsonLd } from "@/components/JsonLd";
 import { SITE_CONFIG } from "@/lib/site-config";
 import {
@@ -101,6 +102,7 @@ export default function RootLayout({
               {children}
             </main>
             <WhatsAppButton />
+            <MobileBottomBar />
             <Footer />
           </TransitionProvider>
         </SmoothScrollProvider>
