@@ -19,6 +19,7 @@ export default function SimuladorPage() {
           { name: "Simulador", path: "/simulador" },
         ])}
       />
+      <h1 className="sr-only">Simulador de Plan de Marketing Sostenible a Medida</h1>
       <SimulatorSection />
     </>
   );

@@ -19,6 +19,7 @@ export default function ClientesPage() {
           { name: "Clientes", path: "/clientes" },
         ])}
       />
+      <h1 className="sr-only">Clientes y Empresas que Confían en Selva Ecomarketing</h1>
       <ClientesSection />
     </>
   );

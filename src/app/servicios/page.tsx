@@ -12,7 +12,7 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/servicios",
   title: "Servicios",
   description:
-    "Nuestros servicios de marketing sostenible: SEO, SEM, GEO, diseño web, gestión de redes sociales, análisis de datos, email marketing, branding, audiovisuales y marketplaces.",
+    "Servicios de marketing sostenible: SEO, SEM, GEO, redes sociales, web, data, branding, email, audiovisuales y marketplaces para empresas con propósito.",
 });
 
 export default function ServiciosPage() {
@@ -35,6 +35,7 @@ export default function ServiciosPage() {
           ...serviceSchemas,
         ]}
       />
+      <h1 className="sr-only">Servicios de Marketing Sostenible para Empresas con Propósito</h1>
       <ServiciosSection />
     </>
   );

@@ -8,7 +8,7 @@ export const SITE_CONFIG = {
   brandShort: "Selva",
   tagline: "Agencia de Marketing Sostenible en Perú",
   defaultDescription:
-    "Agencia de marketing digital en Perú especializada en sostenibilidad: SEO, SEM, GEO, diseño web y branding para empresas con propósito. Impacto medible, comunicación clara.",
+    "Agencia de marketing digital en Perú especializada en sostenibilidad: SEO, SEM, GEO, web y branding para empresas con propósito. Impacto medible.",
   domain: "selvagencia.com",
   baseUrl: "https://selvagencia.com",
   defaultLocale: "es_PE",

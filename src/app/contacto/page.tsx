@@ -26,6 +26,7 @@ export default function ContactoPage() {
           buildContactPageSchema(),
         ]}
       />
+      <h1 className="sr-only">Contacto — Selva Ecomarketing, Agencia de Marketing Sostenible</h1>
       <ContactoSection />
     </>
   );
